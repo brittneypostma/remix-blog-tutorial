@@ -8,6 +8,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+import { Link } from "@remix-run/react";
 
 import tailwindStylesheetUrl from "./styles/tailwind.css";
 import { getUser } from "./session.server";
@@ -36,11 +37,40 @@ export default function App() {
         <Links />
       </head>
       <body className="h-full">
-        <Outlet />
+        <Layout>
+          <Outlet />
+        </Layout>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
       </body>
     </html>
+  );
+}
+
+export function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    <>
+      <nav>
+        <ul className="m-2 flex gap-2 text-lg text-blue-600 transition-all">
+          <li>
+            <Link to="/" className="hover:border-b-2">
+              Home
+            </Link>
+          </li>
+          <li>
+            <Link to="/posts" className="hover:border-b-2">
+              Posts
+            </Link>
+          </li>
+          <li>
+            <Link to="/posts/admin" className="hover:border-b-2">
+              Admin
+            </Link>
+          </li>
+        </ul>
+      </nav>
+      {children}
+    </>
   );
 }
